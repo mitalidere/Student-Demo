@@ -18,9 +18,4 @@ public class Address {
     private int id;
     private String city;
     private int pincode;
-
-    public Address(String city, int pincode) {
-        this.city=city;
-        this.pincode=pincode;
-    }
 }

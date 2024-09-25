@@ -20,7 +20,8 @@ public class Student {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    public Student(String name, Address address) {
+    public Student(int id, String name, Address address) {
+        this.id=id;
         this.name=name;
         this.address=address;
     }

@@ -1,5 +1,6 @@
 package com.example.student_jpa.service;
 
+import com.example.student_jpa.model.Address;
 import com.example.student_jpa.model.Student;
 import com.example.student_jpa.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +30,26 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Student addStudent(Student student, MultipartFile photo) throws Exception {
-        String fileName= UUID.randomUUID().toString()+"_"+ photo.getOriginalFilename();
+    public Student addStudent(String name, String city, int pincode, MultipartFile photo) throws Exception {
+        Student student=new Student();
+        Address address=new Address();
+
+        address.setCity(city);
+        address.setPincode(pincode);
+
+        student.setName(name);
+        student.setAddress(address);
+
+        String fileName= UUID.randomUUID()+"_"+ photo.getOriginalFilename();
         Path filePath= Paths.get(uploadDir+fileName);
         photo.transferTo(filePath);
         student.setPhotoPath(filePath.toString());
-        return student;
+        return studentRepository.save(student);
     }
 
-//    public Student updateStudent(int id, Student student) {
-//        return studentRepository.save(new Student(id, student.getName(), student.getAddress()));
-//    }
+    public Student updateStudent(int id, Student student) {
+        return studentRepository.save(new Student(id, student.getName(), student.getAddress()));
+    }
 //
 //    public String deleteStudent(int id) {
 //        studentRepository.deleteById(id);

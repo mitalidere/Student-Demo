@@ -23,15 +23,17 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student addStudent(@RequestParam String name, @RequestParam String city, @RequestParam int pincode, @RequestParam MultipartFile photo) throws Exception {
-        Student student=new Student(name,new Address(city, pincode));
-        return studentService.addStudent(student, photo);
+    public Student addStudent(@RequestParam("name") String name,
+                              @RequestParam("city") String city,
+                              @RequestParam("pincode") int pincode,
+                              @RequestParam("photo") MultipartFile photo) throws Exception {
+        return studentService.addStudent(name, city, pincode, photo);
     }
 
-//    @PutMapping
-//    public Student updateStudent(@RequestParam int id, @RequestBody Student student) {
-//        return studentService.updateStudent(id, student);
-//    }
+    @PutMapping
+    public Student updateStudent(@RequestParam int id, @RequestBody Student student) {
+        return studentService.updateStudent(id, student);
+    }
 //
 //    @DeleteMapping
 //    public String deleteStudent(@RequestParam int id) {
