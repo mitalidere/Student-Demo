@@ -6,6 +6,7 @@ import com.example.student_jpa.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -23,20 +24,24 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student addStudent(@RequestParam("name") String name,
-                              @RequestParam("city") String city,
-                              @RequestParam("pincode") int pincode,
-                              @RequestParam("photo") MultipartFile photo) throws Exception {
+    public Student addStudent(@RequestParam String name,
+                              @RequestParam String city,
+                              @RequestParam int pincode,
+                              @RequestParam MultipartFile photo) throws Exception {
         return studentService.addStudent(name, city, pincode, photo);
     }
 
     @PutMapping
-    public Student updateStudent(@RequestParam int id, @RequestBody Student student) {
-        return studentService.updateStudent(id, student);
+    public Student updateStudent(@RequestParam int id,
+                                 @RequestParam String name,
+                                 @RequestParam String city,
+                                 @RequestParam int pincode,
+                                 @RequestParam MultipartFile photo) throws Exception {
+        return studentService.updateStudent(id, name, city, pincode, photo);
     }
-//
-//    @DeleteMapping
-//    public String deleteStudent(@RequestParam int id) {
-//        return studentService.deleteStudent(id);
-//    }
+
+    @DeleteMapping
+    public String deleteStudent(@RequestParam int id) {
+        return studentService.deleteStudent(id);
+    }
 }

@@ -47,12 +47,26 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student updateStudent(int id, Student student) {
-        return studentRepository.save(new Student(id, student.getName(), student.getAddress()));
+    public Student updateStudent(int id, String name, String city, int pincode, MultipartFile photo) throws IOException {
+        Student student=new Student();
+        Address address=new Address();
+
+        address.setCity(city);
+        address.setPincode(pincode);
+
+        student.setId(id);
+        student.setName(name);
+        student.setAddress(address);
+
+        String fileName= UUID.randomUUID()+"_"+ photo.getOriginalFilename();
+        Path filePath= Paths.get(uploadDir+fileName);
+        photo.transferTo(filePath);
+        student.setPhotoPath(filePath.toString());
+        return studentRepository.save(student);
     }
-//
-//    public String deleteStudent(int id) {
-//        studentRepository.deleteById(id);
-//        return "Record deleted";
-//    }
+
+    public String deleteStudent(int id) {
+        studentRepository.deleteById(id);
+        return "Record deleted";
+    }
 }
